@@ -12,13 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AirQI">
         <activity
-            android:name=".ui.MainActivity2"
-            android:exported="true"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/Theme.AirQI.NoActionBar" />
-        <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.AirQI.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

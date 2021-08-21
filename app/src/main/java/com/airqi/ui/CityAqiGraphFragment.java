@@ -1,22 +1,22 @@
 package com.airqi.ui;
 
+import android.app.Dialog;
+import android.content.res.Resources;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.airqi.R;
 import com.airqi.data.AqiModel;
 import com.airqi.databinding.FragmentCityAqiGraphBinding;
 import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
@@ -27,25 +27,27 @@ import com.anychart.enums.Anchor;
 import com.anychart.enums.MarkerType;
 import com.anychart.enums.TooltipPositionMode;
 import com.anychart.graphics.vector.Stroke;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CityAqiGraphFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CityAqiGraphFragment extends Fragment {
+public class CityAqiGraphFragment extends BottomSheetDialogFragment {
 
     private static final String ARG_CITY_NAME = "cityName";
 
     private String mCityName;
     private FragmentCityAqiGraphBinding binding;
     private CityAqiGraphViewModel mViewModel;
-    private AqiModel mAqiModel;
     private List<AqiModel> mCityDataList;
+    private BottomSheetBehavior<View> bottomSheetBehavior;
 
     public CityAqiGraphFragment() {
         // Required empty public constructor
@@ -74,28 +76,51 @@ public class CityAqiGraphFragment extends Fragment {
         }
     }
 
+
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_city_aqi_graph, container
-        , false);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        BottomSheetDialog bottomSheet = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
+
+        //inflating layout
+        View view = View.inflate(getContext(), R.layout.fragment_city_aqi_graph, null);
+
+        binding = DataBindingUtil.bind(view);
+        //setting layout with bottom sheet
+        bottomSheet.setContentView(view);
+
+        bottomSheetBehavior = BottomSheetBehavior.from((View) (view.getParent()));
+
+
+        //setting Peek at the 16:9 ratio keyline of its parent.
+        bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_EXPANDED);
+
+
+        //setting max height of bottom sheet
+        view.setMinimumHeight((Resources.getSystem().getDisplayMetrics().heightPixels));
+
         setupViewModel();
         bindViews();
-        return binding.getRoot();
+        return bottomSheet;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     private void setupViewModel() {
         mViewModel = new ViewModelProvider(this,
                 new CityAqiGraphViewModelFactory(requireActivity().getApplication(), mCityName))
                 .get(CityAqiGraphViewModel.class);
-        mViewModel.getCurrentData().observe(getActivity(), current -> {
-            if(current!=null){
-                mAqiModel = current;
+        mViewModel.getCurrentData().observe(requireActivity(), current -> {
+            if (current != null) {
+                binding.executePendingBindings();
             }
         });
-        mViewModel.getCityData().observe(getActivity(), cityData -> {
-            if(cityData != null){
+        mViewModel.getCityData().observe(requireActivity(), cityData -> {
+            if (cityData != null) {
                 mCityDataList = cityData;
                 loadData();
             }
@@ -104,11 +129,13 @@ public class CityAqiGraphFragment extends Fragment {
 
     private void bindViews() {
         binding.setLifecycleOwner(this);
-        binding.setAqiModel(mAqiModel);
-
+        binding.setViewModel(mViewModel);
+        binding.anyChartView.setLayoutParams
+                (new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        (int) (getResources().getDisplayMetrics().heightPixels * 0.8)));
     }
 
-    private void loadData(){
+    private void loadData() {
         Cartesian cartesian = AnyChart.line();
 
         cartesian.animation(true);
@@ -123,13 +150,13 @@ public class CityAqiGraphFragment extends Fragment {
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Trend of Sales of the Most Popular Products of ACME Corp.");
+        cartesian.title("Air Quality Index for " + mCityDataList.get(0).getCityName());
 
-        cartesian.yAxis(0).title("Number of Bottles Sold (thousands)");
+        cartesian.yAxis(0).title("Air Quality Index");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
 
         List<DataEntry> seriesData = new ArrayList<>();
-        for(AqiModel model:mCityDataList){
+        for (AqiModel model : mCityDataList) {
             seriesData.add(new ValueDataEntry(model.getTime(), Float.valueOf(model.getAqiValue())));
         }
 
@@ -138,23 +165,16 @@ public class CityAqiGraphFragment extends Fragment {
         Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
 
         Line series1 = cartesian.line(series1Mapping);
-        series1.name("Brandy");
-        series1.hovered().markers().enabled(true);
+        series1.name(mCityDataList.get(0).getCityName());
         series1.hovered().markers()
                 .type(MarkerType.CIRCLE)
-                .size(4d);
+                .size(0.5d);
         series1.tooltip()
                 .position("right")
                 .anchor(Anchor.LEFT_CENTER)
-                .offsetX(5d)
-                .offsetY(5d);
-
-        cartesian.legend().enabled(true);
-        cartesian.legend().fontSize(13d);
-        cartesian.legend().padding(0d, 0d, 10d, 0d);
+                .offsetX(1d)
+                .offsetY(1d);
 
         binding.anyChartView.setChart(cartesian);
     }
-
-
 }

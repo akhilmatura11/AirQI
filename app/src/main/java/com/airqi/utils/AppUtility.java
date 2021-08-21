@@ -6,34 +6,34 @@ import java.util.Locale;
 
 public class AppUtility {
 
-    public static String getFormattedTimestamp(Long timestamp){
+    public static String getFormattedTimestamp(Long timestamp) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timestamp);
 
         Calendar toCheck = Calendar.getInstance();
-        String time =null;
-        if(calendar.get(Calendar.DAY_OF_YEAR) == toCheck.get(Calendar.DAY_OF_YEAR)
-                && calendar.get(Calendar.YEAR) ==  toCheck.get(Calendar.YEAR)){
-            if(calendar.get(Calendar.HOUR_OF_DAY) == toCheck.get(Calendar.HOUR_OF_DAY)){
-                if(calendar.get(Calendar.MINUTE) == toCheck.get(Calendar.MINUTE)){
+        String time;
+        if (calendar.get(Calendar.DAY_OF_YEAR) == toCheck.get(Calendar.DAY_OF_YEAR)
+                && calendar.get(Calendar.YEAR) == toCheck.get(Calendar.YEAR)) {
+            if (calendar.get(Calendar.HOUR_OF_DAY) == toCheck.get(Calendar.HOUR_OF_DAY)) {
+                if (calendar.get(Calendar.MINUTE) == toCheck.get(Calendar.MINUTE)) {
                     time = "few seconds ago";
-                }else{
+                } else {
                     int diff = toCheck.get(Calendar.MINUTE) - calendar.get(Calendar.MINUTE);
-                    if(diff == 1)
+                    if (diff == 1)
                         time = diff + " minute ago";
                     else
                         time = diff + " minutes ago";
                 }
-            }else{
+            } else {
                 int diff = toCheck.get(Calendar.HOUR_OF_DAY) - calendar.get(Calendar.HOUR_OF_DAY);
-                if(diff == 1)
+                if (diff == 1)
                     time = diff + " hour ago";
                 else
                     time = diff + " hours ago";
             }
-        }else if(isYesterday(calendar)){
+        } else if (isYesterday(calendar)) {
             time = "updated yesterday";
-        }else{
+        } else {
             time = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
         }
         return time;
@@ -43,14 +43,14 @@ public class AppUtility {
         Calendar tooCheck = Calendar.getInstance();
         tooCheck.add(Calendar.DAY_OF_YEAR, -1);
 
-        return calendar.get(Calendar.DAY_OF_YEAR) ==  tooCheck.get(Calendar.DAY_OF_YEAR)
+        return calendar.get(Calendar.DAY_OF_YEAR) == tooCheck.get(Calendar.DAY_OF_YEAR)
                 && calendar.get(Calendar.YEAR) == tooCheck.get(Calendar.YEAR);
     }
 
     public static String getTime(long timeStamp) {
-        Calendar calendar =Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeStamp);
 
-        return new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
+        return new SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.getTime());
     }
 }

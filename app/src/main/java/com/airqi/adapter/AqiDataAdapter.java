@@ -1,8 +1,6 @@
 package com.airqi.adapter;
 
-import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -20,7 +18,7 @@ import java.util.List;
 public class AqiDataAdapter extends RecyclerView.Adapter<AqiDataAdapter.AqiDataViewHolder> {
 
     private final MainActivityViewModel viewModel;
-    List<AqiModel> aqiList = new ArrayList<>();
+    private final List<AqiModel> aqiList = new ArrayList<>();
 
     public AqiDataAdapter(MainActivityViewModel viewModel) {
         this.viewModel = viewModel;
@@ -53,7 +51,8 @@ public class AqiDataAdapter extends RecyclerView.Adapter<AqiDataAdapter.AqiDataV
 
     public static class AqiDataViewHolder extends RecyclerView.ViewHolder {
         private final MainActivityViewModel viewModel;
-        ItemCityBinding mItemViewBinding;
+        private final ItemCityBinding mItemViewBinding;
+
         public AqiDataViewHolder(ItemCityBinding itemViewBinding, MainActivityViewModel viewModel) {
             super(itemViewBinding.getRoot());
             mItemViewBinding = itemViewBinding;

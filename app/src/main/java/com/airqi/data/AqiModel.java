@@ -13,7 +13,7 @@ public class AqiModel {
     private int id;
     private String cityName;
     private String aqiValue;
-    private long timeStamp;
+    private Long timeStamp;
 
     public int getId() {
         return id;
@@ -24,20 +24,22 @@ public class AqiModel {
     }
 
     public String getAqiValue() {
-        return String.format(Locale.getDefault(),"%.2f", Double.valueOf(aqiValue));
+        return String.format(Locale.getDefault(), "%.2f", Double.valueOf(aqiValue));
     }
 
     public void setAqiValue(String aqiValue) {
         this.aqiValue = aqiValue;
     }
 
-    public long getTimeStamp() { return timeStamp;}
+    public Long getTimeStamp() {
+        return timeStamp;
+    }
 
     public String getFormattedTimeStamp() {
         return AppUtility.getFormattedTimestamp(timeStamp);
     }
 
-    public void setTimeStamp(long timeStamp) {
+    public void setTimeStamp(Long timeStamp) {
         this.timeStamp = timeStamp;
     }
 

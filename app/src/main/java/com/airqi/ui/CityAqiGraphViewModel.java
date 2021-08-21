@@ -12,13 +12,12 @@ import com.airqi.data.Repository;
 import java.util.List;
 
 public class CityAqiGraphViewModel extends AndroidViewModel {
-    private final Repository repo;
     private final LiveData<List<AqiModel>> mCityData;
     private final LiveData<AqiModel> mCurrentData;
 
     public CityAqiGraphViewModel(@NonNull Application application, String cityName) {
         super(application);
-        repo = Repository.create(application);
+        Repository repo = Repository.create(application);
         mCityData = repo.getCitData(cityName);
         mCurrentData = repo.getCurrent(cityName);
     }
