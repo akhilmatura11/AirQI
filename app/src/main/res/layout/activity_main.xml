@@ -40,5 +40,18 @@
             app:layout_constraintTop_toBottomOf="@+id/title"
             app:setAdapter="@{AqiViewModel.getAdapter()}" />
 
+        <ImageView
+            android:id="@+id/infoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="@+id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:tint="@color/black"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"
+            android:src="@drawable/outline_info_24"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

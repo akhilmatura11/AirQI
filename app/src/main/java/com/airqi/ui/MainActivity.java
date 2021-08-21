@@ -1,7 +1,6 @@
 package com.airqi.ui;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -11,6 +10,7 @@ import com.airqi.R;
 import com.airqi.data.AqiModel;
 import com.airqi.databinding.ActivityMainBinding;
 import com.airqi.utils.AppUtility;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.setAqiViewModel(mViewModel);
         binding.citiesList.setLayoutManager(new LinearLayoutManager(this));
+        binding.infoBtn.setOnClickListener(view ->
+                new MaterialAlertDialogBuilder(MainActivity.this).setView(R.layout.aqi_info).show());
     }
 
     private void sendToCityFragment(AqiModel aqiModel) {
@@ -71,5 +73,4 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         mViewModel.stopSocket();
     }
-
 }

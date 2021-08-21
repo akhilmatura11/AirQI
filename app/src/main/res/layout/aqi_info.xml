@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:background="#DCDCDC">
+
+
+    <TextView
+        android:id="@+id/title1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/central_pollution_control_board_s"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:textColor="@android:color/secondary_text_light"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/air_quality_standards"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:textColor="@color/very_poor"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="@drawable/rounded_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title2">
+
+        <TextView
+            android:id="@+id/aqi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textStyle="bold"
+            android:text="@string/air_quality_index_aqi"
+            app:layout_constraintEnd_toStartOf="@+id/category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="6dp"
+            android:text="@string/category"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/aqi"
+            app:layout_constraintTop_toTopOf="@+id/aqi" />
+
+        <TextView
+            android:id="@+id/range1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/good"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:text="@string/_0_50"
+            app:layout_constraintEnd_toStartOf="@+id/good"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aqi" />
+
+        <TextView
+            android:id="@+id/good"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:background="@color/good"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/good"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range1"
+            app:layout_constraintTop_toTopOf="@id/range1" />
+
+        <TextView
+            android:id="@+id/range2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/satisfactory"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:text="@string/_51_100"
+            app:layout_constraintEnd_toStartOf="@+id/satisfactory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range1" />
+
+        <TextView
+            android:id="@+id/satisfactory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginStart="1dp"
+            android:background="@color/satisfactory"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/satisfactory"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range2"
+            app:layout_constraintTop_toTopOf="@id/range2" />
+
+        <TextView
+            android:id="@+id/range3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/moderate"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:text="@string/_101_200"
+            app:layout_constraintEnd_toStartOf="@+id/moderate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range2" />
+
+        <TextView
+            android:id="@+id/moderate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:background="@color/moderate"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/moderate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range3"
+            app:layout_constraintTop_toTopOf="@id/range3" />
+
+        <TextView
+            android:id="@+id/range4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/poor"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/_201_300"
+            app:layout_constraintEnd_toStartOf="@+id/poor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range3" />
+
+        <TextView
+            android:id="@+id/poor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:background="@color/poor"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/poor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range4"
+            app:layout_constraintTop_toTopOf="@id/range4" />
+
+        <TextView
+            android:id="@+id/range5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/very_poor"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/_301_400"
+            app:layout_constraintEnd_toStartOf="@+id/veryPoor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range4" />
+
+        <TextView
+            android:id="@+id/veryPoor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:background="@color/very_poor"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/very_poor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range5"
+            app:layout_constraintTop_toTopOf="@id/range5" />
+
+        <TextView
+            android:id="@+id/range6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/severe"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:text="@string/_401_500"
+            app:layout_constraintEnd_toStartOf="@+id/severe"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/range5" />
+
+        <TextView
+            android:id="@+id/severe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:background="@color/severe"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:text="@string/severe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/range6"
+            app:layout_constraintTop_toTopOf="@id/range6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
