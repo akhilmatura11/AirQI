@@ -23,3 +23,14 @@ To display graph, we are using AnyChart -Android library.
 (https://github.com/AnyChart/AnyChart-Android)
 
 Using this library, we can click on the graph, and view the AQI level at different times.
+
+![Home_AirQI](https://user-images.githubusercontent.com/43383108/130334650-08fbbb4a-8d85-4da5-bec6-7df9a55900a5.jpg)
+
+![Graph_AirQI](https://user-images.githubusercontent.com/43383108/130334657-76d452ed-cae3-4cd1-9887-9388fec09a90.jpg)
+
+![Info_AirQI](https://user-images.githubusercontent.com/43383108/130334662-c6bcc061-6903-4c59-be5f-520c0be6f478.jpg)
+
+
+
+
+
