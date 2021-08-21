@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.airqi.R;
 import com.airqi.data.AqiModel;
+import com.airqi.databinding.ActivityMainBinding;
+import com.airqi.utils.AppUtility;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        com.airqi.databinding.ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setLifecycleOwner(this);
         binding.setAqiViewModel(mViewModel);
         binding.citiesList.setLayoutManager(new LinearLayoutManager(this));
@@ -53,7 +56,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mViewModel.startSocket();
+        if(!AppUtility.isInternetAvailable(this)) {
+            Snackbar.make(findViewById(R.id.citiesList), getString(R.string.no_connection),
+                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, view -> {
+                    }).show();
+        }
+        else {
+            mViewModel.startSocket();
+        }
     }
 
     @Override

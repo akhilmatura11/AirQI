@@ -1,5 +1,9 @@
 package com.airqi.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -52,5 +56,21 @@ public class AppUtility {
         calendar.setTimeInMillis(timeStamp);
 
         return new SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.getTime());
+    }
+
+    /**
+     * @return true, if Internet available otherwise false
+     */
+    public static boolean isInternetAvailable(Context context) {
+        if (context != null) {
+            ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connectivity != null) {
+                NetworkInfo networkInfo = connectivity.getActiveNetworkInfo();
+                if (networkInfo != null)
+                    return networkInfo.getState() == NetworkInfo.State.CONNECTED;
+            }
+        }
+        return false;
+
     }
 }

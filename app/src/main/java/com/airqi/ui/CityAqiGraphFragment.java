@@ -81,23 +81,15 @@ public class CityAqiGraphFragment extends BottomSheetDialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         BottomSheetDialog bottomSheet = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
-
-        //inflating layout
         View view = View.inflate(getContext(), R.layout.fragment_city_aqi_graph, null);
 
         binding = DataBindingUtil.bind(view);
-        //setting layout with bottom sheet
         bottomSheet.setContentView(view);
-
         bottomSheetBehavior = BottomSheetBehavior.from((View) (view.getParent()));
-
-
-        //setting Peek at the 16:9 ratio keyline of its parent.
         bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_EXPANDED);
 
-
-        //setting max height of bottom sheet
         view.setMinimumHeight((Resources.getSystem().getDisplayMetrics().heightPixels));
+        bottomSheetBehavior.setSkipCollapsed(true);
 
         setupViewModel();
         bindViews();
@@ -133,24 +125,20 @@ public class CityAqiGraphFragment extends BottomSheetDialogFragment {
         binding.anyChartView.setLayoutParams
                 (new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         (int) (getResources().getDisplayMetrics().heightPixels * 0.8)));
+        binding.anyChartView.setProgressBar(binding.progress);
     }
 
     private void loadData() {
         Cartesian cartesian = AnyChart.line();
-
         cartesian.animation(true);
-
-        cartesian.padding(10d, 20d, 5d, 20d);
-
         cartesian.crosshair().enabled(true);
         cartesian.crosshair()
                 .yLabel(true)
-                // TODO ystroke
                 .yStroke((Stroke) null, null, null, (String) null, (String) null);
 
         cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
 
-        cartesian.title("Air Quality Index for " + mCityDataList.get(0).getCityName());
+        cartesian.title(mCityDataList.get(0).getCityName());
 
         cartesian.yAxis(0).title("Air Quality Index");
         cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
@@ -174,7 +162,6 @@ public class CityAqiGraphFragment extends BottomSheetDialogFragment {
                 .anchor(Anchor.LEFT_CENTER)
                 .offsetX(1d)
                 .offsetY(1d);
-
         binding.anyChartView.setChart(cartesian);
     }
 }
